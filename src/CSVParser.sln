@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser.Core", "Parser.Core\Parser.Core.csproj", "{471D4CEB-2AB2-49A6-85EF-4B6462739008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser.Tests", "Parser.Tests\Parser.Tests.csproj", "{A6B32967-0393-4557-B8D6-6D60658B1ABA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BF5C4E99-A600-4372-BBD9-362C4D4ABFB2}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{471D4CEB-2AB2-49A6-85EF-4B6462739008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{471D4CEB-2AB2-49A6-85EF-4B6462739008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{471D4CEB-2AB2-49A6-85EF-4B6462739008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{471D4CEB-2AB2-49A6-85EF-4B6462739008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6B32967-0393-4557-B8D6-6D60658B1ABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6B32967-0393-4557-B8D6-6D60658B1ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6B32967-0393-4557-B8D6-6D60658B1ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6B32967-0393-4557-B8D6-6D60658B1ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
