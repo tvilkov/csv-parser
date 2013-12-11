@@ -56,8 +56,9 @@ namespace Parser.Core
                 {
                     HasHeader = options.HasHeader,
                     Tokenizer = options.Tokenizer ?? CsvParserOptions.Default.Tokenizer,
-                    IsNullValueString = options.IsNullValueString ?? CsvParserOptions.Default.IsNullValueString,
+                    NullValueLine = options.NullValueLine ?? CsvParserOptions.Default.NullValueLine,
                     UnknownTypeParser = options.UnknownTypeParser ?? CsvParserOptions.Default.UnknownTypeParser,
+                    SkipLine = options.SkipLine ?? CsvParserOptions.Default.SkipLine,
                     Converters = options.Converters ?? CsvParserOptions.Default.Converters,
                 };
         }
@@ -83,7 +84,7 @@ namespace Parser.Core
             foreach (var line in lines)
             {
                 ++counter;
-                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+                if (m_Options.SkipLine(line)) continue;
                 yield return ParseCore<T>(counter, line);
             }
         }
@@ -95,7 +96,7 @@ namespace Parser.Core
             while ((line = reader.ReadLine()) != null)
             {
                 ++counter;
-                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+                if (m_Options.SkipLine(line)) continue;
                 yield return ParseCore<T>(counter, line);
             }
         }
@@ -142,7 +143,7 @@ namespace Parser.Core
         {
             if (asType == null) throw new ArgumentNullException("asType");
 
-            if (m_Options.IsNullValueString(rawFieldValue, asType))
+            if (m_Options.NullValueLine(rawFieldValue, asType))
             {
                 return asType.GetDefaultValue();
             }

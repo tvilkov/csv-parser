@@ -16,7 +16,7 @@ namespace Parser.Tests
         {
             var parser = Csv.Parser(new CsvParserOptions
             {
-                IsNullValueString = (str, type) => string.IsNullOrWhiteSpace(str) || str.Trim() == "-"
+                NullValueLine = (str, type) => string.IsNullOrWhiteSpace(str) || str.Trim() == "-"
             }).WithSchema(
                 Csv.Field("Name", 0),
                 Csv.Field("Age", 1, typeof(int)),
@@ -37,7 +37,7 @@ namespace Parser.Tests
         {
             var parser = Csv.Parser(new CsvParserOptions
                 {
-                    IsNullValueString = (str, type) => string.IsNullOrWhiteSpace(str) || str.Trim() == "-"
+                    NullValueLine = (str, type) => string.IsNullOrWhiteSpace(str) || str.Trim() == "-"
                 }).WithSchemaFromType(typeof(Record));
             var records = parser.Parse<Record>(TestData).ToArray();
 
