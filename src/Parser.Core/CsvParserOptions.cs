@@ -16,6 +16,8 @@ namespace Parser.Core
 
         public CsvParserOptions Merge(CsvParserOptions other)
         {
+            if (other == null) throw new ArgumentNullException("other");
+
             return new CsvParserOptions
                 {
                     HasHeader = HasHeader,
