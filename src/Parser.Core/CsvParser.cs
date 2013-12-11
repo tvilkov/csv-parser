@@ -52,15 +52,7 @@ namespace Parser.Core
         {
             if (options == null) throw new ArgumentNullException("options");
 
-            m_Options = new CsvParserOptions
-                {
-                    HasHeader = options.HasHeader,
-                    Tokenizer = options.Tokenizer ?? CsvParserOptions.Default.Tokenizer,
-                    NullValueLine = options.NullValueLine ?? CsvParserOptions.Default.NullValueLine,
-                    UnknownTypeParser = options.UnknownTypeParser ?? CsvParserOptions.Default.UnknownTypeParser,
-                    SkipLine = options.SkipLine ?? CsvParserOptions.Default.SkipLine,
-                    Converters = options.Converters ?? CsvParserOptions.Default.Converters,
-                };
+            m_Options = options.Merge(CsvParserOptions.Default);
         }
 
         internal void SetSchema(params CsvSchemaField[] schema)
@@ -84,7 +76,7 @@ namespace Parser.Core
             foreach (var line in lines)
             {
                 ++counter;
-                if (m_Options.SkipLine(line)) continue;
+                if (m_Options.IgnoreLineDetector(line)) continue;
                 yield return ParseCore<T>(counter, line);
             }
         }
@@ -96,7 +88,7 @@ namespace Parser.Core
             while ((line = reader.ReadLine()) != null)
             {
                 ++counter;
-                if (m_Options.SkipLine(line)) continue;
+                if (m_Options.IgnoreLineDetector(line)) continue;
                 yield return ParseCore<T>(counter, line);
             }
         }
@@ -143,7 +135,7 @@ namespace Parser.Core
         {
             if (asType == null) throw new ArgumentNullException("asType");
 
-            if (m_Options.NullValueLine(rawFieldValue, asType))
+            if (m_Options.NullValueDetector(rawFieldValue, asType))
             {
                 return asType.GetDefaultValue();
             }
