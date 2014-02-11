@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Parser.Core;
@@ -44,6 +45,23 @@ namespace Parser.Tests
             printRecords(records);
 
             Assert.AreEqual(5, records.Length);
+        }
+
+        [Test]
+        public void CanParseFromFileTest()
+        {
+            var parser = Csv.Parser(new CsvParserOptions
+            {
+                HasHeader = true,
+                NullValueDetector = (str, type) => string.IsNullOrWhiteSpace(str) || str.Trim() == "-"
+            }).WithSchemaFromType(typeof(Record));
+
+            using (var reader = new StreamReader(File.OpenRead("CorrectData.csv")))
+            {
+                var records = parser.Parse<Record>(reader).ToArray();
+                printRecords(records);
+                Assert.AreEqual(5, records.Length);
+            }
         }
 
         private static void printRecords(IEnumerable<Record> records)

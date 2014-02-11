@@ -1,0 +1,7 @@
+# Just comment
+Name;Age;BirthDate;Amount;Single
+Adam;38;01.01.2013;5000.890;false
+Eva;18;10.01.956;5000.890;1
+Ivan;18;-;-45,89;true
+Mike;36;12.01.2015;;;
+Hoolio Rodriges;35;5.08.2013;123.456;1;

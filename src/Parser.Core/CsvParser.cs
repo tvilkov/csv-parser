@@ -61,6 +61,7 @@ namespace Parser.Core
             m_Schema = schema;
         }
 
+        [Obsolete("Use text reader version instead")]
         public IEnumerable<T> Parse<T>(string filePath) where T : new()
         {
             using (var fs = File.OpenRead(filePath))
@@ -73,22 +74,35 @@ namespace Parser.Core
         public IEnumerable<T> Parse<T>(IEnumerable<string> lines) where T : new()
         {
             int counter = 0;
+            bool firstNotIgnoredLine = true;
             foreach (var line in lines)
             {
                 ++counter;
                 if (m_Options.IgnoreLineDetector(line)) continue;
+                if (firstNotIgnoredLine)
+                {
+                    firstNotIgnoredLine = false;
+                    if (m_Options.HasHeader) continue;
+                }
+
                 yield return ParseCore<T>(counter, line);
             }
         }
 
         public IEnumerable<T> Parse<T>(TextReader reader) where T : new()
-        {
+        {            
             string line;
             int counter = 0;
+            bool firstNotIgnoredLine = true;
             while ((line = reader.ReadLine()) != null)
             {
                 ++counter;
                 if (m_Options.IgnoreLineDetector(line)) continue;
+                if (firstNotIgnoredLine)
+                {
+                    firstNotIgnoredLine = false;
+                    if (m_Options.HasHeader) continue;
+                }
                 yield return ParseCore<T>(counter, line);
             }
         }
