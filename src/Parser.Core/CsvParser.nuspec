@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CsvParse</id>
+    <version>0.0.1.0</version>
+    <title>CsvParser</title>
+    <authors>tvilkov</authors>
+    <owners>tvilkov</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple CSV parser</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>csv csvparser comma separated value delimited</tags>
+  </metadata>    
+</package>
