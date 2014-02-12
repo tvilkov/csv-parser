@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -59,20 +60,12 @@ namespace Parser.Core
         {
             if (schema == null) throw new ArgumentNullException("schema");
             m_Schema = schema;
-        }
-
-        [Obsolete("Use text reader version instead")]
-        public IEnumerable<T> Parse<T>(string filePath) where T : new()
-        {
-            using (var fs = File.OpenRead(filePath))
-            using (var reader = new StreamReader(fs))
-            {
-                return Parse<T>(reader);
-            }
-        }
+        }       
 
         public IEnumerable<T> Parse<T>(IEnumerable<string> lines) where T : new()
         {
+            EnsureSchema();
+
             int counter = 0;
             bool firstNotIgnoredLine = true;
             foreach (var line in lines)
@@ -90,7 +83,9 @@ namespace Parser.Core
         }
 
         public IEnumerable<T> Parse<T>(TextReader reader) where T : new()
-        {            
+        {
+            EnsureSchema();
+
             string line;
             int counter = 0;
             bool firstNotIgnoredLine = true;
@@ -144,6 +139,12 @@ namespace Parser.Core
 
             return parsed;
         }
+        
+        [System.Diagnostics.DebuggerStepThrough]
+        protected void EnsureSchema()
+        {
+            if (m_Schema == null || m_Schema.Length == 0) throw new ConfigurationException("CSV shema is not set");
+        } 
 
         protected object ParseFieldValue(string rawFieldValue, Type asType)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -64,13 +65,22 @@ namespace Parser.Tests
             }
         }
 
+        [Test]
+        public void ThrowsConfigurationExceptionIfShemaIsNotSetTest()
+        {
+            var parser = Csv.Parser(new CsvParserOptions() { HasHeader = false });
+            var ex = Assert.Throws<ConfigurationException>(() => parser.Parse<Record>(TestData).ToArray());
+
+            Assert.IsNotNull(ex);
+            Assert.That(ex.Message, Is.StringContaining("CSV shema is not set"));
+        }
+
         private static void printRecords(IEnumerable<Record> records)
         {
             foreach (var record in records)
             {
                 Debug.WriteLine(record.ToString());
             }
-
         }
 
         private static IEnumerable<string> TestData
@@ -82,7 +92,6 @@ namespace Parser.Tests
                 yield return "Ivan;18;-;-45,89;true";
                 yield return "Mike;36;12.01.2015;;;";
                 yield return "Hoolio Rodriges;35;5.08.2013;123.456;1;";
-
             }
         }
     }
